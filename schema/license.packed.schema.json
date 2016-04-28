@@ -1,0 +1,43 @@
+{
+    "title": "Lithium License",
+    "description": "An extensible software licensing format.",
+    
+    "type": "object",
+    "required": [
+        "chain",
+        "license",
+        "signature"
+    ],
+    "properties": {
+        "chain": {
+            "description": "The certificates comprising the source path for this license. The first certificate represents the root, with all subsequent certificates being signed by it.",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "The PEM (RFC 1421) encoded certificate."
+            }
+        },
+        "license": {
+            "$schema": "license.data.schema.json",
+            "description": "The license data for this packed license."
+        },
+        "signature": {
+            "description": "The encoded signature of the license",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "The signature algorithm used to derive the signature of this license.",
+                    "type": "string",
+                    "enum": [
+                        "DSA",
+                        "RSA",
+                        "ECDSA"
+                    ]
+                },
+                "data": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

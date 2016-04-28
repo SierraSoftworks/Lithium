@@ -1,0 +1,56 @@
+{
+    "title": "Lithium License Data",
+    "description": "The data package for a Lithium license, including its metadata and custom payload.",
+    
+    "type": "object",
+    "required": [
+        "meta",
+        "payload"
+    ],
+    "properties": {
+        "meta": {
+            "type": "object",
+            
+            "properties": {
+                "id": {
+                    "description": "The unique ID for this license, used by clients to request a license renewal.",
+                    "type": "string"
+                },
+                
+                "activates": {
+                    "description": "The ISO8061 date on which this license becomes active.",
+                    "type": "string",
+                    "pattern": "/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\d{3}Z$"
+                },
+                "expires": {
+                    "description": "The ISO8061 date on which this license expires.",
+                    "type": "string",
+                    "pattern": "/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\d{3}Z$"
+                },
+                
+                "pack": {
+                    "description": "The licenses contained within this license pack, allowing the owner of this license to generate licenses for its decendants.",
+                    "type": "object",
+                    
+                    "additionalProperties": {
+                        "description": "The types of license which are available for generation for child nodes.",
+                        "type": "object",
+                        "properties": {
+                            "count": {
+                                "description": "The number of licenses which may be generated for this license type.",
+                                "type": "number",
+                                "minimum": 1
+                            },
+                            "template": {
+                                "$schema": "license.data.schema.json"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "payload": {
+            "type": "object"
+        }
+    }
+}
