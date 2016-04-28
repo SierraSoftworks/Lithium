@@ -17,6 +17,10 @@
                 "description": "The PEM (RFC 1421) encoded certificate."
             }
         },
+        "certificate": {
+            "description": "A signed version of your public key, for use when generating child licenses. This will only be present if your license contains a 'pack' metadata proprety.",
+            "type": "string"
+        },
         "license": {
             "$schema": "license.data.schema.json",
             "description": "The license data for this packed license."
