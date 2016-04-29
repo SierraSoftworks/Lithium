@@ -41,8 +41,9 @@
                                 "type": "number",
                                 "minimum": 1
                             },
-                            "template": {
-                                "$schema": "license.data.schema.json"
+                            "payload": {
+                                "description": "The license payload you would like to attach to licenses of this type.",
+                                "type": "object"
                             }
                         }
                     }
