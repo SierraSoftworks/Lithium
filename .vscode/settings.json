@@ -1,0 +1,4 @@
+{
+    "go.buildOnSave": false,
+    "go.formatOnSave": true
+}

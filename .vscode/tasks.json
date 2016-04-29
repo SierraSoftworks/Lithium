@@ -1,0 +1,50 @@
+{
+	"version": "0.1.0",
+	"command": "go",
+	"isShellCommand": true,
+    "echoCommand": true,
+	"args": [],
+	"showOutput": "silent",
+    
+    "tasks": [
+        {
+            "taskName": "build",
+            "args": [
+                "./..."
+            ],
+            "isBuildCommand": true,
+    
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "\\s*(.+?\\.go):(\\d+): (.+)",
+                    "file": 1,
+                    "line": 2,
+                    "message": 3,
+                    "column": -1
+                },
+                "owner": "go",
+                "fileLocation": "relative"
+            }
+        },
+        {
+            "taskName": "test",
+            "args": [
+                "-v",
+                "./..."
+            ],
+            "isTestCommand": true,
+    
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "\\s*(.+?\\.go):(\\d+): (.+)",
+                    "file": 1,
+                    "line": 2,
+                    "message": 3,
+                    "column": -1
+                },
+                "owner": "go",
+                "fileLocation": "relative"
+            }
+        }
+    ]
+}
