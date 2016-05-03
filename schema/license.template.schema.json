@@ -1,0 +1,28 @@
+{
+    "title": "Lithium License Template",
+    "description": "A template is used to generate additional licenses, it dictates the properties and payload for that license.",
+    
+    "type": "object",
+    "required": [
+        "count",
+        "payload"
+    ],
+    "properties": {
+        "count": {
+            "description": "The number of licenses which may be generated for this license type.",
+            "type": "number",
+            "minimum": 1
+        },
+        "payload": {
+            "description": "The license payload you would like to attach to licenses of this type.",
+            "type": "object"
+        },
+        "pack": {
+            "description": "The additional sublicenses which are included within this license. Not present for leaf licenses.",
+            "type": "object",
+            "additionalProperties": {
+                "$schema": "license.template.schema.json"
+            }
+        }
+    }
+}

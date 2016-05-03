@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-const demoData = `{"meta":{"id":"0","activates":"1970-01-01T00:00:00Z","expires":"1970-01-01T00:00:00Z","pack":{"test":{"count":0,"payload":{}}}},"payload":{"x":1}}`
+const demoData = `{"meta":{"id":"0","activates":"1970-01-01T00:00:00Z","expires":"1970-01-01T00:00:00Z","pack":{"test":{"count":0,"payload":{},"pack":{"test":{"count":1,"payload":{"x":1}}}}}},"payload":{"x":1}}`
 
 var demoPayload = map[string]interface{}{
-	"x": 1,
+	"x": 1.0,
 }
 
 func TestEncodeData(t *testing.T) {
@@ -27,6 +27,14 @@ func TestEncodeData(t *testing.T) {
 				"test": &Template{
 					Count:   0,
 					Payload: map[string]interface{}{},
+					Pack: map[string]*Template{
+						"test": {
+							Count: 1,
+							Payload: map[string]interface{}{
+								"x": 1,
+							},
+						},
+					},
 				},
 			},
 		},
@@ -84,7 +92,7 @@ func TestDecodeData(t *testing.T) {
 		t.Error("expected license pack to include a test type")
 	} else {
 		if testPack.Count != 0 {
-			t.Error("expected a count of 0, got %v", testPack.Count)
+			t.Errorf("expected a count of 0, got %v", testPack.Count)
 		}
 
 		if testPack.Payload == nil {
@@ -94,13 +102,38 @@ func TestDecodeData(t *testing.T) {
 		if !reflect.DeepEqual(testPack.Payload, map[string]interface{}{}) {
 			t.Error("expected payload to be an empty object")
 		}
+
+		if testPack.Pack == nil {
+			t.Fatal("expected pack to contain a sublicense pack")
+		}
+
+		testPack2, exists := testPack.Pack["test"]
+		if !exists {
+			t.Error("expected a 'test' sublicense to exist")
+		} else {
+			if testPack2.Count != 1 {
+				t.Errorf("expected sublicense to have a count of 1, got %d", testPack2.Count)
+			}
+
+			if testPack2.Payload == nil {
+				t.Error("expected sublicense to have a payload")
+			} else {
+				if testPack2.Payload["x"] != 1.0 {
+					t.Errorf("Expected sublicense payload.x to be 1, got %#v", testPack2.Payload["x"])
+				}
+			}
+
+			if testPack2.Pack != nil {
+				t.Error("expected sublicense to not have a license pack")
+			}
+		}
 	}
 
 	if data.Payload == nil {
 		t.Fatal("expected data.Payload to be non-nil")
 	}
 
-	if reflect.DeepEqual(data.Payload, demoPayload) {
+	if !reflect.DeepEqual(data.Payload, demoPayload) {
 		t.Errorf("expected data.Payload to be { x: 1 }, got %v", data.Payload)
 	}
 
