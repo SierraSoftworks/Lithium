@@ -16,7 +16,7 @@
     
             "problemMatcher": {
                 "pattern": {
-                    "regexp": "\\s*(.+?\\.go):(\\d+)(?:(\\d+)): (.+)",
+                    "regexp": "\\s*(.+?\\.go):(\\d+)(?::(\\d+))?: (.+)",
                     "file": 1,
                     "line": 2,
                     "column": 3,
@@ -36,7 +36,7 @@
     
             "problemMatcher": {
                 "pattern": {
-                    "regexp": "\\s*(.+?\\.go):(\\d+)(?:(\\d+)): (.+)",
+                    "regexp": "\\s*(.+?\\.go):(\\d+)(?::(\\d+))?: (.+)",
                     "file": 1,
                     "line": 2,
                     "column": 3,
