@@ -63,64 +63,107 @@ codes, MAC addresses etc. Decisions about how the private key is protected fall 
 purview of this specification and will depend on the platform you are targetting.
 
 ## License Packing
-Licenses are packed in the following format prior to encryption. This enables simple parsing
-using any JSON library once decryption is complete, as well as making it straightforward for
-a human to analyze the license for obvious defects or errors.
+Licenses are packed using a sequence of PEM blocks. These blocks include the `LITHIUM LICENSE KEY`,
+`LITHIUM LICENSE`, `LITHIUM SIGNATURE` and `LITHIUM CERTIFICATE` blocks. With the exception of the
+`LITHIUM CERTIFICATE` blocks, ordering is not important.
 
-```json
-{
-    "chain": [
-        "{{master_cert}}",
-        "{{parent_cert}}",
-        "{{license_server_cert}}"
-    ],
-    "license": {
-        "meta": {
-            "id": "8ddcb55cd6a341b48c4aa7b611e1721b",
-            
-            "activates": "2016-02-14T06:08:12.012Z",
-            "expires": "2016-02-14T08:10:12.014Z"
-        },
-        
-        "payload": {
-            "feature1": true
-        }
-    },
-    "signature": {
-        "type": "DSA",
-        "data": "{{license_signature}}"
-    }
-}
+```
+-----BEGIN LITHIUM LICENSE KEY-----
+6Ja6TUrx0euTsau/tjUoTfZm4QF9lC4uDLoWg6RoIZYmSF1zxjbmwysaxmYy13Dd
+BrdNNz3f97TD5/t5MaEM56bGtpQj0dqgutP57Ue/kTqNADilcEgSvvR9LGhtNH4z
+JGzbWDU3+TEWDyqUpIoxMHOitvg53u3O2aw99BpokeA=
+-----END LITHIUM LICENSE KEY-----
+-----BEGIN LITHIUM LICENSE-----
+algorithm: aes256
+iv: BAdz8wzMhcbiJyXpkaaXIQ==
+9MAhZiUgECGOHgD9Lg2wJg5+grzdY9GsCctT6DYUMiUjicChIoov2aCAZevBXBXa
+wiRpkmn0Bqgt525ZXgFakL1FlNFWgqnLR79Ij//J3aqU/TjP2oKoblhYLeHTY3vu
+79uyIQvIyn6WRn3GoO3hVYFVPlWRXK2R9wd7pIj4yCGX1Ug=
+-----END LITHIUM LICENSE-----
+-----BEGIN LITHIUM SIGNATURE-----
+algorithm: sha256
+gFVD3kuzTLQYjLTvf6d3jyBZe9SFLz5Le4JLsCiVhd3CCwrnivWYOMwwtsdVJO+N
+szVGbLOY6mttXNsP4So+Ucfy4xI0T3Gvz+afeiNCPnAZ2m0rOuqoxC+31vWMnuWt
+JLKSMz587E06qHEk7I6/AuKWJBtFn0umQvhSNktr/ME=
+-----END LITHIUM SIGNATURE-----
+-----BEGIN LITHIUM CERTIFICATE-----
+MIICsjCCAhugAwIBAgIBATANBgkqhkiG9w0BAQsFADB2MRkwFwYDVQQKExBTaWVy
+cmEgU29mdHdvcmtzMRowGAYDVQQLExFMaXRoaXVtIExpY2Vuc2luZzEiMCAGA1UE
+AxMZTGl0aGl1bSBUZXN0aW5nICh0ZXN0aW5nKTEZMBcGA1UEBRMQUm9vdCBDZXJ0
+aWZpY2F0ZTAgFw0xNjA1MDMxNDE0MzRaGA8yMTE2MDQwOTE0MTQzNFowdjEZMBcG
+A1UEChMQU2llcnJhIFNvZnR3b3JrczEaMBgGA1UECxMRTGl0aGl1bSBMaWNlbnNp
+bmcxIjAgBgNVBAMTGUxpdGhpdW0gVGVzdGluZyAodGVzdGluZykxGTAXBgNVBAUT
+EFJvb3QgQ2VydGlmaWNhdGUwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAJ+d
+q1UwLUQaAm3rxC94PHiJkxwkgH1JSOE9NvFKYPOjGXVqAxpUUorvTkQLXnVS9tcB
+Oe5kOKpsppluX7r8bkf78jAI2Pm447EtnMvHJKfRJqRqd3zmoL2goMIV21j9WuWj
+Pjl6HPGsAvfdfSAvGZ18Huf4lEpj37HUL2gaPLKPAgMBAAGjTjBMMA4GA1UdDwEB
+/wQEAwIB9jAPBgNVHSUECDAGBgRVHSUAMBMGA1UdEwEB/wQJMAcBAf8CAgCAMBQG
+A1UdEQQNMAuCCWxvY2FsaG9zdDANBgkqhkiG9w0BAQsFAAOBgQAKjLSIOy1AFTNl
+NessCe8ETzw3M2+gyH/IO7e2DFOYsflkkcaNERM9OA64afEQOgW+Klo9BGjYAB67
+aZPcbxPanPD9ULUioF593phV4DufyW+qmfhWnAzQjHQpv8r2U8KXJdR02v7xEOg4
+5lw1MYJgxleG6haeb6S3FUaEyi9hMA==
+-----END LITHIUM CERTIFICATE-----
+-----BEGIN LITHIUM CERTIFICATE-----
+MIIClDCCAf2gAwIBAgIFAJW/VocwDQYJKoZIhvcNAQELBQAwdjEZMBcGA1UEChMQ
+U2llcnJhIFNvZnR3b3JrczEaMBgGA1UECxMRTGl0aGl1bSBMaWNlbnNpbmcxIjAg
+BgNVBAMTGUxpdGhpdW0gVGVzdGluZyAodGVzdGluZykxGTAXBgNVBAUTEFJvb3Qg
+Q2VydGlmaWNhdGUwHhcNNzAwMTAxMDAwMDAwWhcNNzAwMTAxMDAwMDAwWjBqMRkw
+FwYDVQQKExBTaWVycmEgU29mdHdvcmtzMRowGAYDVQQLExFMaXRoaXVtIExpY2Vu
+c2luZzEiMCAGA1UEAxMZTGl0aGl1bSBUZXN0aW5nICh0ZXN0aW5nKTENMAsGA1UE
+BRMEdGVzdDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA8mFWK7JkzR/ELQmQ
+3m3OjxOBmf8YcvK0wdJ+w1DzN+upKS6/E5sswRQGDf5YENHzA/WiesTyzHtVWTzh
+qTlP4+KXyAFUcogjsf00DQPs/TUBOvlHzXxCVF9qQrdlmz1p9TXIbOED+m7wisrK
+peJpBxEXAzGONBlxMEyEAqtkuC8CAwEAAaM6MDgwDgYDVR0PAQH/BAQDAgSQMBAG
+A1UdEwEB/wQGMAQCAgCAMBQGA1UdEQQNMAuCCWxvY2FsaG9zdDANBgkqhkiG9w0B
+AQsFAAOBgQCIPQ9hrI2AiHAYBsNbnpA1iN6hlx1DWCN6llAs7QwjPp8bR1hW7Yjn
+A79u+KzYSLuKSd6lP3leaeNKkNl3JOrPeHeaJLMYL5TY09MwlID33+40/y3XWK8/
+9aGgpXdxJ7IQv1MBZJZH2tELb4zyJzAquzeg54SuTvYdDm9MGBzbtw==
+-----END LITHIUM CERTIFICATE-----
 ```
 
-### Chain
-The chain is a `string[]` of signed certificates representing the signature chain of servers
-which has resulted in this license being generated. Each certificate in the chain is expected
-to be signed by the previous certificate's corresponding private key.
+### License Key
+The license key block comprises an encrypted key for the decryption of the License block.
+This key is encrypted using an asymmetric encryption scheme like RSA and should only be
+decryptable by the node which will be making use of the license. This ensures that a license
+may not be used across multiple nodes while also making the license contents opaque to
+3rd parties.
 
-The first certificate is expected to match the public key embedded within the application at
-compile time.
+### License
+The license field contains the structured license object in encrypted form. It should be
+decrypted using the key sourced from the `LITHIUM LICENSE KEY` section, yielding a 
+structured JSON object as defined by the `license.data.schema.json` schema.
+
+The `iv` and `algorithm` headers exist to enable interoperability across various
+implementations. `iv` is encoded using standard Base64 encoding and is generated
+for each license encryption operation, while the `algorithm` will likely be `aes256`
+in most cases.
+
+Once the license has been confirmed to originate from a trusted source,
+the application is responsible for confirming that the current time rests between
+the `activates` and `expires` times. If it does not, the license is considered to have
+expired and the user should be informed.
+
+### Signature
+The signature field represents the asymmetric cryptographic signature of the raw data
+within the `LITHIUM LICENSE` field (in encrypted form). By analyzing the signature it is
+therefore possible to determine whether the data has been tampered with.
+
+If the signature does not match the expected signature for the data, given the public key
+available in the signature chain, then the certificate is considered tampered with and
+invalid. The application should inform the user to this effect.
+
+### Certificate
+Each instance of the `LITHIUM CERTIFICATE` block represents a DER encoded x509 certificate.
+The ordering of these blocks is important, as the first block is expected to match the
+certificate embedded within the client application (a trusted root) while each subsequent
+certificate is expected to be signed by the previous certificate. In this way, it is
+possible to trace the authenticity of any certificate back to the root certificate.
 
 Similarly, the final certificate is expected to be the certificate used to generate the
 `signature` for the license.
 
 If any of these conditions is not met, the license is determined to be invalid and the
 application should inform the user to this effect.
-
-### Signature
-The signature field represents the asymmetric cryptographic signature of the JSON encoded
-license data from the `license` field, signed by the private key of the final certificate
-in the certification chain.
-
-If the signature does not match the expected signature for the data, given the public key
-available in the signature chain, then the certificate is considered tampered with and
-invalid. The application should inform the user to this effect.
-
-### License
-The license field contains the structured license object. Once the license has been confirmed
-to originate from a trusted source, the application is responsible for confirming that the
-current time rests between the `activates` and `expires` times. If it does not, the license
-is considered to have expired and the user should be informed.
 
 ## Implementation Details
 
