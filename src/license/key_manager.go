@@ -1,9 +1,8 @@
 package license
 
 import (
-	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/rand"
+	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
@@ -30,6 +29,12 @@ const PublicKeyType = "LITHIUM PUBLIC KEY"
 // with different keys. This is usually not necessary.
 var PublicKeyName = "machine.pub"
 
+// KeySize is the size of the RSA key used for license encryption
+// and decryption. 2048 is probably secure enough for any general
+// use, however you can reduce this to 1024 or increase to 4096
+// to balance generation speed and security.
+var KeySize = 2048
+
 // KeyManager provides a set of tools for accessing your machine's
 // local key. This is tied to your machine and allows you to decrypt
 // your license packs.
@@ -53,7 +58,7 @@ func NewKeyManager(machineCode []byte) *KeyManager {
 // GetPublicKey retrieves the public key for your local machine. This
 // is used by upstream servers to identify and encrypt keys for your
 // machine.
-func (m *KeyManager) GetPublicKey() (*ecdsa.PublicKey, error) {
+func (m *KeyManager) GetPublicKey() (*rsa.PublicKey, error) {
 	err := m.ensureKeypair()
 	if err != nil {
 		return nil, err
@@ -79,8 +84,8 @@ func (m *KeyManager) GetPublicKey() (*ecdsa.PublicKey, error) {
 	}
 
 	switch pub.(type) {
-	case *ecdsa.PublicKey:
-		return pub.(*ecdsa.PublicKey), nil
+	case *rsa.PublicKey:
+		return pub.(*rsa.PublicKey), nil
 	default:
 		return nil, errors.New("only ECDSA public keys supported")
 	}
@@ -89,7 +94,7 @@ func (m *KeyManager) GetPublicKey() (*ecdsa.PublicKey, error) {
 // GetPrivateKey retrieves the private key for your local machine. This
 // is used to decrypt license packs and sign child license files for
 // later verification.
-func (m *KeyManager) GetPrivateKey() (*ecdsa.PrivateKey, error) {
+func (m *KeyManager) GetPrivateKey() (*rsa.PrivateKey, error) {
 	err := m.ensureKeypair()
 	if err != nil {
 		return nil, err
@@ -118,7 +123,7 @@ func (m *KeyManager) GetPrivateKey() (*ecdsa.PrivateKey, error) {
 		return nil, err
 	}
 
-	priv, err := x509.ParseECPrivateKey(privData)
+	priv, err := x509.ParsePKCS1PrivateKey(privData)
 	if err != nil {
 		return nil, err
 	}
@@ -157,15 +162,12 @@ func (m *KeyManager) keyFileExists(file string) bool {
 }
 
 func (m *KeyManager) createKeypair() error {
-	priv, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
+	priv, err := rsa.GenerateKey(rand.Reader, KeySize)
 	if err != nil {
 		return err
 	}
 
-	derPrivateKey, err := x509.MarshalECPrivateKey(priv)
-	if err != nil {
-		return err
-	}
+	derPrivateKey := x509.MarshalPKCS1PrivateKey(priv)
 
 	encryptedPrivateKey, err := x509.EncryptPEMBlock(
 		rand.Reader,

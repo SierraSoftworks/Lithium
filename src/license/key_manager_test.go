@@ -10,6 +10,7 @@ import (
 )
 
 func TestNewKeyManager(t *testing.T) {
+	KeySize = 1024
 	machineCode := []byte("test")
 
 	m := NewKeyManager(machineCode)
@@ -27,6 +28,7 @@ func TestNewKeyManager(t *testing.T) {
 }
 
 func TestGetPublicKey(t *testing.T) {
+	KeySize = 1024
 	machineCode := []byte("test")
 	tempDir := os.TempDir()
 	testPath, err := ioutil.TempDir(tempDir, "lithium")
@@ -45,14 +47,6 @@ func TestGetPublicKey(t *testing.T) {
 
 	if key == nil {
 		t.Fatalf("expected public key to be defined")
-	}
-
-	if key.X == nil {
-		t.Errorf("expected key.X to be defined")
-	}
-
-	if key.Y == nil {
-		t.Errorf("expected key.Y to be defined")
 	}
 
 	f, err := os.Open(filepath.Join(testPath, PublicKeyName))
@@ -77,6 +71,7 @@ func TestGetPublicKey(t *testing.T) {
 }
 
 func TestPublicKeyPersistence(t *testing.T) {
+	KeySize = 1024
 	machineCode := []byte("test")
 	tempDir := os.TempDir()
 	testPath, err := ioutil.TempDir(tempDir, "lithium")
@@ -104,6 +99,7 @@ func TestPublicKeyPersistence(t *testing.T) {
 }
 
 func TestGetPrivateKey(t *testing.T) {
+	KeySize = 1024
 	machineCode := []byte("test")
 	tempDir := os.TempDir()
 	testPath, err := ioutil.TempDir(tempDir, "lithium")
@@ -124,12 +120,9 @@ func TestGetPrivateKey(t *testing.T) {
 		t.Fatalf("expected private key to be defined")
 	}
 
-	if key.X == nil {
-		t.Errorf("expected key.X to be defined")
-	}
-
-	if key.Y == nil {
-		t.Errorf("expected key.Y to be defined")
+	err = key.Validate()
+	if err != nil {
+		t.Error("expected key to be valid,", err)
 	}
 
 	if key.D == nil {
@@ -158,6 +151,7 @@ func TestGetPrivateKey(t *testing.T) {
 }
 
 func TestPrivateKeyPersistence(t *testing.T) {
+	KeySize = 1024
 	machineCode := []byte("test")
 	tempDir := os.TempDir()
 	testPath, err := ioutil.TempDir(tempDir, "lithium")
@@ -185,6 +179,7 @@ func TestPrivateKeyPersistence(t *testing.T) {
 }
 
 func TestResetKeys(t *testing.T) {
+	KeySize = 1024
 	machineCode := []byte("test")
 	tempDir := os.TempDir()
 	testPath, err := ioutil.TempDir(tempDir, "lithium")
