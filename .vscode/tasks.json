@@ -10,7 +10,8 @@
         {
             "taskName": "build",
             "args": [
-                "./..."
+                "-o", "lithium.exe",
+                "./src"
             ],
             "isBuildCommand": true,
     
@@ -30,7 +31,7 @@
             "taskName": "test",
             "args": [
                 "-v",
-                "./..."
+                "./src/..."
             ],
             "isTestCommand": true,
     
