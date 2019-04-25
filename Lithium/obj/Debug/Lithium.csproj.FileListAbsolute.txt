@@ -1,0 +1,16 @@
+D:\Programming\C#\Projects\Lithium\Lithium\obj\Debug\Lithium.csprojResolveAssemblyReference.cache
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Lithium.dll
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Lithium.pdb
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Dynamic.dll
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Scripting.dll
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Scripting.Metadata.dll
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Dynamic.pdb
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Dynamic.xml
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Scripting.pdb
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Scripting.xml
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Scripting.Metadata.pdb
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Microsoft.Scripting.Metadata.xml
+D:\Programming\C#\Projects\Lithium\Lithium\obj\Debug\Lithium.dll
+D:\Programming\C#\Projects\Lithium\Lithium\obj\Debug\Lithium.pdb
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Irony.dll
+D:\Programming\C#\Projects\Lithium\Lithium\bin\Debug\Irony.pdb
