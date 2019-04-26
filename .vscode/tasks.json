@@ -10,13 +10,14 @@
         {
             "taskName": "build",
             "args": [
-                "./..."
+                "-o", "lithium.exe",
+                "./src"
             ],
             "isBuildCommand": true,
     
             "problemMatcher": {
                 "pattern": {
-                    "regexp": "\\s*(.+?\\.go):(\\d+)(?:(\\d+)): (.+)",
+                    "regexp": "\\s*(.+?\\.go):(\\d+)(?::(\\d+))?: (.+)",
                     "file": 1,
                     "line": 2,
                     "column": 3,
@@ -30,13 +31,13 @@
             "taskName": "test",
             "args": [
                 "-v",
-                "./..."
+                "./src/..."
             ],
             "isTestCommand": true,
     
             "problemMatcher": {
                 "pattern": {
-                    "regexp": "\\s*(.+?\\.go):(\\d+)(?:(\\d+)): (.+)",
+                    "regexp": "\\s*(.+?\\.go):(\\d+)(?::(\\d+))?: (.+)",
                     "file": 1,
                     "line": 2,
                     "column": 3,

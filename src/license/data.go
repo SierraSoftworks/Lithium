@@ -20,7 +20,7 @@ type Metadata struct {
 	ID          string               `json:"id"`
 	ActivatesOn time.Time            `json:"activates"`
 	ExpiresOn   time.Time            `json:"expires"`
-	Pack        map[string]*Template `json:"pack"`
+	Pack        map[string]*Template `json:"pack,omitempty"`
 }
 
 // Template represents a class of licenses as well as the number of licenses
@@ -28,6 +28,7 @@ type Metadata struct {
 type Template struct {
 	Count   int                    `json:"count"`
 	Payload map[string]interface{} `json:"payload"`
+	Pack    map[string]*Template   `json:"pack,omitempty"`
 }
 
 // EncodeData is responsible for encoding a license Data structure into

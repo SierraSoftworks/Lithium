@@ -34,18 +34,7 @@
                     
                     "additionalProperties": {
                         "description": "The types of license which are available for generation for child nodes.",
-                        "type": "object",
-                        "properties": {
-                            "count": {
-                                "description": "The number of licenses which may be generated for this license type.",
-                                "type": "number",
-                                "minimum": 1
-                            },
-                            "payload": {
-                                "description": "The license payload you would like to attach to licenses of this type.",
-                                "type": "object"
-                            }
-                        }
+                        "$schema": "license.template.schema.json"
                     }
                 }
             }
